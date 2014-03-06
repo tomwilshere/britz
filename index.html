@@ -5,13 +5,22 @@
 	<link href="css/britz.css" rel="stylesheet">
 </head>
 <body>
-<form id="britz-form">
-<input type="text" name="britz-text" placeholder="input some text here!">
+<form id="britz-form" action="javascript:go()">
+	<input id="britz-text" type="text" name="britz-text" placeholder="input some text here!">
+	<input type="submit" value="Go!">
 </form>
 
 <div id="britz-output"></div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="js/britz.js" type="text/javascript" charset="utf-8" async defer></script>
+
+<script>
+function go() {
+	var b = new britz('britz-output', 400);
+	b.read($("#britz-text").val());
+}
+</script>
+
 </body>
 </html>

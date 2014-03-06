@@ -1,5 +1,8 @@
 // Construct a britz object
-function britz(wpm) {
+function britz(containerId, wpm) {
+	// Default container is britz-output
+	this.container = containerId || 'britz-output';
+
 	// Default speed 250 words per minute
 	this.wpm = wpm || 250;
 	this.delay = this.calculateDelay(this.wpm);
@@ -47,7 +50,7 @@ britz.prototype.display = function(word) {
 	var html = "<span class=\"britz-word-part\">" + britzword + "</span>";
 
 	console.log(html);
-	$('#britz-output').html(html);
+	$('#' + this.container).html(html);
 }
 
 // Convert words per minute to a delay time
