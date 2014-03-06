@@ -7,6 +7,7 @@
 <body>
 <form id="britz-form" action="javascript:go()">
 	<input id="britz-text" type="text" name="britz-text" placeholder="input some text here!">
+	<input id="britz-speed" type="number" name="Speed (wpm)" min="60" max="10000">
 	<input type="submit" value="Go!">
 </form>
 
@@ -19,11 +20,11 @@
 
 var b;
 $(document).ready(function() {
-	b = new britz('britz-output', 400);
+	b = new britz('britz-output');
 });
 
 function go() {
-	b.read($("#britz-text").val());
+	b.read($("#britz-text").val(), $('#britz-speed').val());
 }
 </script>
 

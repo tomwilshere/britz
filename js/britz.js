@@ -1,14 +1,10 @@
 // Construct a britz object
-function britz(containerId, wpm) {
+function britz(containerId) {
 	// Default container is britz-output
 	this.container = containerId || 'britz-output';
 
 	this.maxFocalIndex = 4;
 	this.output = "britz-word-output";
-
-	// Default speed 250 words per minute
-	this.wpm = wpm || 250;
-	this.delay = this.calculateDelay(this.wpm);
 
 	var html = "<div class=\"britz-word\"><div id=\"britz-top\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
 	html += "<div id=\"" + this.output + "\">" + this.makeSpaces(1) + "</div>";
@@ -17,8 +13,12 @@ function britz(containerId, wpm) {
 }
 
 // Read a bunch of text!
-britz.prototype.read = function(text) {
-	var words = this.preprocess(text);
+britz.prototype.read = function(text, wpm) {
+	// Default speed 250 words per minute
+	wpm = wpm || 250;
+	var delay = this.calculateDelay(wpm);
+
+	var words = this.preprocess(text, delay);
 	for (var i = 0; i < words.length; i++) {
 		this.readWord(words[i].word, words[i].delay * i);
 	}
@@ -35,14 +35,14 @@ britz.prototype.readWord = function(word, delay) {
 
 // Give back a data structure containing each word and
 // it's calculated delay
-britz.prototype.preprocess = function(text) {
+britz.prototype.preprocess = function(text, delay) {
 	var words = text.split(" ");
 	var data = [];
 	for (var i = 0; i < words.length; i++) {
 		if(words[i].length > 0) {
 			data.push({
 				word: words[i],
-				delay: this.delay
+				delay: delay // TODO: something smart here with punctuation, word length etc.
 			});
 		}
 	}
@@ -50,7 +50,7 @@ britz.prototype.preprocess = function(text) {
 	// Clear the display to finish
 	data.push({
 		word: " ",
-		delay: this.delay
+		delay: delay
 	});
 
 	return data;
