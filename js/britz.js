@@ -10,9 +10,9 @@ function britz(containerId, wpm) {
 	this.wpm = wpm || 250;
 	this.delay = this.calculateDelay(this.wpm);
 
-	var html = "<div id=\"britz-top\" class=\"britz-word\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
-	html += "<div id=\"" + this.output + "\"></div>";
-	html += "<div id=\"britz-bottom\" class=\"britz-word\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
+	var html = "<div class=\"britz-word\"><div id=\"britz-top\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
+	html += "<div id=\"" + this.output + "\">&nbsp</div>";
+	html += "<div id=\"britz-bottom\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div></div>";
 	$('#' + this.container).html(html);
 }
 
