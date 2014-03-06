@@ -9,17 +9,17 @@ function britz(wpm) {
 britz.prototype.read = function(text) {
 	var words = this.preprocess(text);
 	for (var i = 0; i < words.length; i++) {
-		this.readWord(words[i]);
+		this.readWord(words[i].word, words[i].delay * i);
 	}
 }
 
 // Read a word by setting a timeout for the word's delay
 // and displaying it afterwards
-britz.prototype.readWord = function(word) {
+britz.prototype.readWord = function(word, delay) {
 	var that = this;
 	setTimeout(function() {
-		that.display(word.word);
-	}, word.delay);
+		that.display(word);
+	}, delay);
 }
 
 // Give back a data structure containing each word and
@@ -30,7 +30,7 @@ britz.prototype.preprocess = function(text) {
 	for (var i = 0; i < words.length; i++) {
 		data.push({
 			word: words[i],
-			delay: this.delay*i
+			delay: this.delay
 		});
 	}
 	return data;
