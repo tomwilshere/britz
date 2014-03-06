@@ -5,6 +5,10 @@ function britz(containerId) {
 
 	this.maxFocalIndex = 4;
 	this.output = "britz-word-output";
+	this.punctuation = {
+		short: ",:;-",
+		long: ".!?"
+	};
 
 	var html = "<div class=\"britz-word\"><div id=\"britz-top\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
 	html += "<div id=\"" + this.output + "\">" + this.makeSpaces(1) + "</div>";
@@ -19,8 +23,11 @@ britz.prototype.read = function(text, wpm) {
 	var delay = this.calculateDelay(wpm);
 
 	var words = this.preprocess(text, delay);
+
+	var currentDelay = 0;
 	for (var i = 0; i < words.length; i++) {
-		this.readWord(words[i].word, words[i].delay * i);
+		this.readWord(words[i].word, currentDelay);
+		currentDelay += words[i].delay;
 	}
 }
 
@@ -40,9 +47,18 @@ britz.prototype.preprocess = function(text, delay) {
 	var data = [];
 	for (var i = 0; i < words.length; i++) {
 		if(words[i].length > 0) {
+			var lastLetter = words[i].charAt(words[i].length - 1);
+			var augmentedDelay = delay;
+
+			if(this.punctuation.short.indexOf(lastLetter) >= 0) {
+				augmentedDelay += delay;
+			} else if(this.punctuation.long.indexOf(lastLetter) >= 0) {
+				augmentedDelay += 2 * delay;
+			}
+
 			data.push({
 				word: words[i],
-				delay: delay // TODO: something smart here with punctuation, word length etc.
+				delay: augmentedDelay
 			});
 		}
 	}
