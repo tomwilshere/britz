@@ -38,7 +38,16 @@ britz.prototype.preprocess = function(text) {
 
 // Display a word to the screen
 britz.prototype.display = function(word) {
-	console.log(word);
+	var focalIndex = this.focalLetterIndex(word);
+	var start = word.substring(0, focalIndex);
+	var focalLetter = word.charAt(focalIndex);
+	var end = word.substring(focalIndex+1, word.length);
+	
+	var britzword = start + "<span class=\"focal-letter\">" + focalLetter + "</span>" + end;
+	var html = "<span class=\"britz-word-part\">" + britzword + "</span>";
+
+	console.log(html);
+	$('#britz-output').html(html);
 }
 
 // Convert words per minute to a delay time
@@ -47,34 +56,34 @@ britz.prototype.calculateDelay = function(wpm) {
 }
 
 // Return the index of the letter to highlight/centre around
-britz.prototype.focalLetter = function(word) {
-		var focalLetter = 1;
+britz.prototype.focalLetterIndex = function(word) {
+	var focalLetter = 1;
 
-		switch (word.length) {
-		case 1:
-			focalLetter = 0;
-			break;
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-			focalLetter = 1;
-			break;
-		case 6:
-		case 7:
-		case 8:
-		case 9:
-			focalLetter = 2;
-			break;
-		case 10:
-		case 11:
-		case 12:
-		case 13:
-			focalLetter = 3;
-			break;
-		default:
-			focalLetter = 4;
-		};
-
-		return focalLetter;
+	switch (word.length) {
+	case 1:
+		focalLetter = 0;
+		break;
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		focalLetter = 1;
+		break;
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+		focalLetter = 2;
+		break;
+	case 10:
+	case 11:
+	case 12:
+	case 13:
+		focalLetter = 3;
+		break;
+	default:
+		focalLetter = 4;
 	};
+
+	return focalLetter;
+};
