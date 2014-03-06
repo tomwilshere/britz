@@ -11,7 +11,7 @@ function britz(containerId, wpm) {
 	this.delay = this.calculateDelay(this.wpm);
 
 	var html = "<div class=\"britz-word\"><div id=\"britz-top\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
-	html += "<div id=\"" + this.output + "\">&nbsp</div>";
+	html += "<div id=\"" + this.output + "\">" + this.makeSpaces(1) + "</div>";
 	html += "<div id=\"britz-bottom\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div></div>";
 	$('#' + this.container).html(html);
 }
@@ -39,11 +39,20 @@ britz.prototype.preprocess = function(text) {
 	var words = text.split(" ");
 	var data = [];
 	for (var i = 0; i < words.length; i++) {
-		data.push({
-			word: words[i],
-			delay: this.delay
-		});
+		if(words[i].length > 0) {
+			data.push({
+				word: words[i],
+				delay: this.delay
+			});
+		}
 	}
+
+	// Clear the display to finish
+	data.push({
+		word: " ",
+		delay: this.delay
+	});
+
 	return data;
 }
 
@@ -61,7 +70,6 @@ britz.prototype.display = function(word) {
 	var britzword = spaces + start + "<span class=\"focal-letter\">" + focalLetter + "</span>" + end;
 	var html = "<span class=\"britz-word\">" + britzword + "</span>";
 
-	console.log(html);
 	$('#' + this.output).html(html);
 }
 
