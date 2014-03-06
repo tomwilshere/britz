@@ -3,9 +3,17 @@ function britz(containerId, wpm) {
 	// Default container is britz-output
 	this.container = containerId || 'britz-output';
 
+	this.maxFocalIndex = 4;
+	this.output = "britz-word-output";
+
 	// Default speed 250 words per minute
 	this.wpm = wpm || 250;
 	this.delay = this.calculateDelay(this.wpm);
+
+	var html = "<div id=\"britz-top\" class=\"britz-word\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
+	html += "<div id=\"" + this.output + "\"></div>";
+	html += "<div id=\"britz-bottom\" class=\"britz-word\">" + this.makeSpaces(this.maxFocalIndex) + "|" + "</div>";
+	$('#' + this.container).html(html);
 }
 
 // Read a bunch of text!
@@ -46,11 +54,15 @@ britz.prototype.display = function(word) {
 	var focalLetter = word.charAt(focalIndex);
 	var end = word.substring(focalIndex+1, word.length);
 	
-	var britzword = start + "<span class=\"focal-letter\">" + focalLetter + "</span>" + end;
-	var html = "<span class=\"britz-word-part\">" + britzword + "</span>";
+	var numSpaces = this.maxFocalIndex - focalIndex;
+
+	var spaces = this.makeSpaces(numSpaces);
+
+	var britzword = spaces + start + "<span class=\"focal-letter\">" + focalLetter + "</span>" + end;
+	var html = "<span class=\"britz-word\">" + britzword + "</span>";
 
 	console.log(html);
-	$('#' + this.container).html(html);
+	$('#' + this.output).html(html);
 }
 
 // Convert words per minute to a delay time
@@ -89,4 +101,12 @@ britz.prototype.focalLetterIndex = function(word) {
 	};
 
 	return focalLetter;
-};
+}
+
+britz.prototype.makeSpaces = function(numSpaces) {
+	var spaces = "";
+	for(var i = 0; i < numSpaces; i++) {
+		spaces += "&nbsp";
+	}
+	return spaces;
+}
