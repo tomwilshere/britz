@@ -45,3 +45,36 @@ britz.prototype.display = function(word) {
 britz.prototype.calculateDelay = function(wpm) {
 	return 60000 / wpm;
 }
+
+// Return the index of the letter to highlight/centre around
+britz.prototype.focalLetter = function(word) {
+		var focalLetter = 1;
+
+		switch (word.length) {
+		case 1:
+			focalLetter = 0;
+			break;
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+			focalLetter = 1;
+			break;
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+			focalLetter = 2;
+			break;
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+			focalLetter = 3;
+			break;
+		default:
+			focalLetter = 4;
+		};
+
+		return focalLetter;
+	};
