@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Britz - A British way to read</title>
+	<title>Britz</title>
 	<link href="css/britz.css" rel="stylesheet">
 </head>
 <body>
+<div id="britz-output"></div>
+<br></br>
 <form id="britz-form" action="javascript:go()">
-	<input id="britz-text" type="text" name="britz-text" placeholder="input some text here!">
-	<input id="britz-speed" type="number" name="Speed (wpm)" min="60" max="10000">
+	<textarea id="britz-text" type="text" name="britz-text" placeholder="input some text here!"></textarea>
+	<br></br>
+	Speed (wpm): <input id="britz-speed" type="number" name="Speed (wpm)" value="400" min="60" max="10000">
 	<input type="submit" value="Go!">
 </form>
 
-<div id="britz-output"></div>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/britz.js" type="text/javascript" charset="utf-8"></script>
 
 <script>
